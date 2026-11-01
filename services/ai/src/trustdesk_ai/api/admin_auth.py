@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
 import hmac
+import ipaddress
 import re
 import secrets
 from typing import Annotated, Literal
@@ -24,6 +26,21 @@ from trustdesk_ai.db.session import global_session, tenant_session
 from trustdesk_ai.providers.ratelimit.postgres import PostgresRateLimitStore, bucket_key
 
 router = APIRouter(prefix="/v1/admin", tags=["admin-auth"])
+
+
+def ip_network_key(ip: str) -> str:
+    """IPv6 clients usually control a whole /64, so throttle per /64; IPv4 per address."""
+    try:
+        addr = ipaddress.ip_address(ip)
+    except ValueError:
+        return ip
+    if isinstance(addr, ipaddress.IPv6Address):
+        if addr.ipv4_mapped is not None:
+            return str(addr.ipv4_mapped)
+        return str(ipaddress.ip_network(f"{addr}/64", strict=False))
+    return str(addr)
+
+
 _limiter = PostgresRateLimitStore()
 LOGIN_WINDOW = 900  # seconds
 
@@ -69,12 +86,26 @@ class LoginIn(BaseModel):
 @router.post("/auth/login", response_model=LoginOut)
 async def login(body: LoginIn, request: Request) -> LoginOut:
     ip = client_ip(request)
-    # Only FAILED attempts count, keyed on (email, IP) and on IP. Someone guessing from elsewhere therefore
-    # cannot lock the real owner out; a single source is still stopped after a few failures.
-    pair_key = bucket_key("login-fail", body.email.lower(), ip)
-    ip_key = bucket_key("login-fail-ip", ip)
-    if await _limiter.count(pair_key, LOGIN_WINDOW) >= 10 or await _limiter.count(ip_key, LOGIN_WINDOW) >= 30:
-        raise HTTPException(429, "too many failed sign-in attempts, try again in 15 minutes")
+    email = body.email.lower()
+    # Each attempt atomically reserves a slot BEFORE the password is checked (no check-then-act race); a
+    # successful login refunds it, so only failures accumulate.
+    #  - (email, client network): hard limit 10 / 15 min - stops a single source guessing one account.
+    #  - client network: hard limit 30 / 15 min - stops one source spraying many accounts.
+    #  - email alone: no hard lockout (that would let anyone lock the owner out); after 20 failures from
+    #    anywhere, every attempt is slowed down progressively, which blunts distributed guessing.
+    keys = {
+        "pair": (bucket_key("login-fail", email, ip_network_key(ip)), 10),
+        "ip": (bucket_key("login-fail-ip", ip_network_key(ip)), 30),
+    }
+    account_key = bucket_key("login-fail-account", email)
+    reserved: list[str] = []
+    for key, limit in keys.values():
+        reserved.append(key)
+        if not await _limiter.hit(key, limit, LOGIN_WINDOW):
+            raise HTTPException(429, "too many failed sign-in attempts, try again in 15 minutes")
+    account_failures = await _limiter.count(account_key, LOGIN_WINDOW)
+    if account_failures >= 20:
+        await asyncio.sleep(min(0.25 * (account_failures - 19), 5.0))
     settings = get_settings()
     try:
         async with global_session() as db:
@@ -87,9 +118,10 @@ async def login(body: LoginIn, request: Request) -> LoginOut:
                 user_agent=request.headers.get("user-agent"),
             )
     except auth.AuthError as exc:
-        await _limiter.hit(pair_key, 10, LOGIN_WINDOW)
-        await _limiter.hit(ip_key, 30, LOGIN_WINDOW)
+        await _limiter.hit(account_key, 1_000_000, LOGIN_WINDOW)  # counter only; never blocks on its own
         raise HTTPException(401, "invalid email or password") from exc
+    for key in reserved:
+        await _limiter.refund(key, LOGIN_WINDOW)
     await audit(principal.tenant_id, principal.user_id, "auth.login", request=request)
     return LoginOut(
         **_session_out(principal).model_dump(), token=token, expires_in_seconds=settings.session_ttl_hours * 3600

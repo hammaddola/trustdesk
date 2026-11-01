@@ -152,6 +152,9 @@ def test_failed_logins_throttle_per_email_and_ip_without_locking_out_others(clie
             counts[key] = counts.get(key, 0) + 1
             return counts[key] <= limit
 
+        async def refund(self, key, window):
+            counts[key] = max(counts.get(key, 0) - 1, 0)
+
     async def always_wrong(*args, **kwargs):
         raise auth.AuthError("invalid")
 
@@ -164,3 +167,11 @@ def test_failed_logins_throttle_per_email_and_ip_without_locking_out_others(clie
     # Same email from a different client address is NOT locked out (keys are per email+IP, failures only).
     monkeypatch.setattr(admin_auth, "client_ip", lambda request: "198.51.100.7")
     assert client.post("/v1/admin/auth/login", json=body).status_code == 401
+
+
+def test_ipv6_clients_are_grouped_by_64():
+    from trustdesk_ai.api.admin_auth import ip_network_key
+
+    assert ip_network_key("2001:db8:1:2::1") == ip_network_key("2001:db8:1:2:ffff::9") == "2001:db8:1:2::/64"
+    assert ip_network_key("203.0.113.9") == "203.0.113.9"
+    assert ip_network_key("::ffff:203.0.113.9") == "203.0.113.9"

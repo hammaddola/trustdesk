@@ -37,6 +37,19 @@ class PostgresRateLimitStore:
                 await db.execute(text("DELETE FROM rate_limit_buckets WHERE window_start < now() - interval '1 day'"))
         return int(count) <= limit
 
+    async def refund(self, key: str, window_seconds: int) -> None:
+        """Give back one hit in the current window (e.g. a reserved login attempt that succeeded)."""
+        now = int(time.time())
+        window = datetime.fromtimestamp(now - now % window_seconds, UTC)
+        async with global_session() as db:
+            await db.execute(
+                text(
+                    "UPDATE rate_limit_buckets SET count = GREATEST(count - 1, 0) "
+                    "WHERE bucket_key = :k AND window_start = :w"
+                ),
+                {"k": key, "w": window},
+            )
+
     async def count(self, key: str, window_seconds: int) -> int:
         """Current hits in this window, without adding one."""
         now = int(time.time())
