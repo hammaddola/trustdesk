@@ -1,0 +1,66 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      DIRECT_DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
+      DATABASE_URL: postgresql://trustdesk_app:ci_app_password_123@localhost:5432/postgres
+      TRUSTDESK_APP_DB_PASSWORD: ci_app_password_123
+      TRUSTDESK_ENV: test
+    defaults:
+      run:
+        working-directory: services/ai
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: ruff format --check src tests
+      - run: mypy src
+      - run: pytest -q
+      - name: Migrations + integration tests (real Postgres + pgvector, RLS)
+        run: |
+          trustdesk db-bootstrap
+          TRUSTDESK_INTEGRATION=1 pytest -q tests/integration
+      - name: OpenAPI contract is up to date
+        run: |
+          python -c "import json; from trustdesk_ai.main import create_app; open('../../packages/contracts/openapi.json','w',encoding='utf-8').write(json.dumps(create_app().openapi(), indent=2, ensure_ascii=False)+'\n')"
+          git diff --exit-code ../../packages/contracts/openapi.json
+
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @trustdesk/contracts check
+      - run: pnpm -r typecheck
+      - run: pnpm --filter @trustdesk/sdk test
+      - run: pnpm --filter @trustdesk/widget test
+      - name: Widget build (single file + bundle-size budget)
+        run: pnpm --filter @trustdesk/widget build
+      - run: pnpm --filter @trustdesk/admin build

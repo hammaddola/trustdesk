@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrustDesk widget — local test page (DEMO)</title>
+    <style>
+      /* Hostile host-page CSS: the widget must not be affected (Shadow DOM isolation check). */
+      * { font-family: "Comic Sans MS", cursive !important; color: red; }
+      button { background: yellow !important; border: 5px dashed green !important; }
+    </style>
+  </head>
+  <body>
+    <h1>Acme Studio (DEMO page)</h1>
+    <p>Local test page for the widget. Set the key printed by <code>trustdesk seed-demo</code>.</p>
+    <script type="module" src="/src/loader.tsx" data-tenant="td_pk_demo_7icFFHAdV9ncZKH5" data-api="http://localhost:8000" data-theme="dark"></script>
+  </body>
+</html>

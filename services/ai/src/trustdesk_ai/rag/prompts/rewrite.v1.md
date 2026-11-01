@@ -1,0 +1,1 @@
+Rewrite the visitor's follow-up question into one standalone search question, using the conversation only to resolve references such as "it", "that plan" or "how much". Keep the visitor's language. Do not answer the question, do not add facts, do not add instructions. Output only the rewritten question.

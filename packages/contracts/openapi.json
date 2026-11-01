@@ -1,0 +1,3660 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "TrustDesk API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/v1/public/{public_key}/config": {
+      "get": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Widget Config",
+        "operationId": "widget_config_v1_public__public_key__config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WidgetConfig"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/{public_key}/chat/stream": {
+      "post": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Chat Stream",
+        "operationId": "chat_stream_v1_public__public_key__chat_stream_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChatRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response Chat Stream V1 Public  Public Key  Chat Stream Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/{public_key}/feedback": {
+      "post": {
+        "tags": [
+          "public"
+        ],
+        "summary": "Feedback",
+        "operationId": "feedback_v1_public__public_key__feedback_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FeedbackRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/public/{public_key}/leads": {
+      "post": {
+        "tags": [
+          "public-handoff"
+        ],
+        "summary": "Create Lead",
+        "operationId": "create_lead_v1_public__public_key__leads_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadReceipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/auth/login": {
+      "post": {
+        "tags": [
+          "admin-auth"
+        ],
+        "summary": "Login",
+        "operationId": "login_v1_admin_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/auth/logout": {
+      "post": {
+        "tags": [
+          "admin-auth"
+        ],
+        "summary": "Logout",
+        "operationId": "logout_v1_admin_auth_logout_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        }
+      }
+    },
+    "/v1/admin/auth/session": {
+      "get": {
+        "tags": [
+          "admin-auth"
+        ],
+        "summary": "Session",
+        "operationId": "session_v1_admin_auth_session_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/auth/switch-tenant": {
+      "post": {
+        "tags": [
+          "admin-auth"
+        ],
+        "summary": "Switch Tenant",
+        "operationId": "switch_tenant_v1_admin_auth_switch_tenant_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SwitchIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/setup/status": {
+      "get": {
+        "tags": [
+          "admin-auth"
+        ],
+        "summary": "Setup Status",
+        "operationId": "setup_status_v1_admin_setup_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetupStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/setup": {
+      "post": {
+        "tags": [
+          "admin-auth"
+        ],
+        "summary": "Setup",
+        "description": "Creates the first owner and organization. Only works while no users exist and with the setup token.",
+        "operationId": "setup_v1_admin_setup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetupIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/sources": {
+      "get": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "List Sources",
+        "operationId": "list_sources_v1_admin_sources_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SourceOut"
+                  },
+                  "type": "array",
+                  "title": "Response List Sources V1 Admin Sources Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Add Source",
+        "operationId": "add_source_v1_admin_sources_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourceIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/sources/upload": {
+      "post": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Upload",
+        "operationId": "upload_v1_admin_sources_upload_post",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_v1_admin_sources_upload_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Upload V1 Admin Sources Upload Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/sources/{source_id}": {
+      "get": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Source Detail",
+        "operationId": "source_detail_v1_admin_sources__source_id__get",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SourceDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Update Source",
+        "operationId": "update_source_v1_admin_sources__source_id__patch",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SourcePatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Delete Source",
+        "operationId": "delete_source_v1_admin_sources__source_id__delete",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/sources/{source_id}/reindex": {
+      "post": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Reindex",
+        "operationId": "reindex_v1_admin_sources__source_id__reindex_post",
+        "parameters": [
+          {
+            "name": "source_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Source Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/documents/{document_id}": {
+      "patch": {
+        "tags": [
+          "admin-sources"
+        ],
+        "summary": "Update Document",
+        "operationId": "update_document_v1_admin_documents__document_id__patch",
+        "parameters": [
+          {
+            "name": "document_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Document Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DocumentPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/overview": {
+      "get": {
+        "tags": [
+          "admin-data"
+        ],
+        "summary": "Overview",
+        "operationId": "overview_v1_admin_overview_get",
+        "parameters": [
+          {
+            "name": "days",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 365,
+              "minimum": 1,
+              "default": 30,
+              "title": "Days"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Overview"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/conversations": {
+      "get": {
+        "tags": [
+          "admin-data"
+        ],
+        "summary": "List Conversations",
+        "operationId": "list_conversations_v1_admin_conversations_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "since",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Since"
+            }
+          },
+          {
+            "name": "until",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Until"
+            }
+          },
+          {
+            "name": "confidence",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "high",
+                    "medium",
+                    "low"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Confidence"
+            }
+          },
+          {
+            "name": "handoff",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Handoff"
+            }
+          },
+          {
+            "name": "channel",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "enum": [
+                "widget",
+                "playground"
+              ],
+              "type": "string",
+              "default": "widget",
+              "title": "Channel"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ConversationRow"
+                  },
+                  "title": "Response List Conversations V1 Admin Conversations Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/conversations/{conversation_id}": {
+      "get": {
+        "tags": [
+          "admin-data"
+        ],
+        "summary": "Conversation Detail",
+        "operationId": "conversation_detail_v1_admin_conversations__conversation_id__get",
+        "parameters": [
+          {
+            "name": "conversation_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Conversation Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConversationDetail"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/leads": {
+      "get": {
+        "tags": [
+          "admin-data"
+        ],
+        "summary": "List Leads",
+        "operationId": "list_leads_v1_admin_leads_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "new",
+                    "contacted",
+                    "qualified",
+                    "closed",
+                    "spam"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 200,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LeadOut"
+                  },
+                  "title": "Response List Leads V1 Admin Leads Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/leads/{lead_id}": {
+      "patch": {
+        "tags": [
+          "admin-data"
+        ],
+        "summary": "Update Lead",
+        "operationId": "update_lead_v1_admin_leads__lead_id__patch",
+        "parameters": [
+          {
+            "name": "lead_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid",
+              "title": "Lead Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LeadPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeadOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/leads.csv": {
+      "get": {
+        "tags": [
+          "admin-data"
+        ],
+        "summary": "Export Leads",
+        "operationId": "export_leads_v1_admin_leads_csv_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 200
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "name": "status",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "new",
+                    "contacted",
+                    "qualified",
+                    "closed",
+                    "spam"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/settings": {
+      "get": {
+        "tags": [
+          "admin-settings"
+        ],
+        "summary": "Get Settings ",
+        "operationId": "get_settings__v1_admin_settings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsOut"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "admin-settings"
+        ],
+        "summary": "Update Settings",
+        "operationId": "update_settings_v1_admin_settings_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SettingsOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/admin/playground": {
+      "post": {
+        "tags": [
+          "admin-playground"
+        ],
+        "summary": "Playground",
+        "operationId": "playground_v1_admin_playground_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlaygroundIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlaygroundOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Body_upload_v1_admin_sources_upload_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "contentMediaType": "application/octet-stream",
+            "title": "File"
+          },
+          "tags": {
+            "type": "string",
+            "title": "Tags",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_upload_v1_admin_sources_upload_post"
+      },
+      "BookingChannel": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "title": "BookingChannel"
+      },
+      "CaptchaConfig": {
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "turnstile",
+              "hcaptcha"
+            ],
+            "title": "Provider"
+          },
+          "site_key": {
+            "type": "string",
+            "title": "Site Key"
+          }
+        },
+        "type": "object",
+        "required": [
+          "provider",
+          "site_key"
+        ],
+        "title": "CaptchaConfig"
+      },
+      "ChatRequest": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Message"
+          },
+          "visitor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Visitor Id"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "page_url": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2048
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Url"
+          },
+          "page_title": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Page Title"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message",
+          "visitor_id"
+        ],
+        "title": "ChatRequest"
+      },
+      "CitationOut": {
+        "properties": {
+          "marker": {
+            "type": "integer",
+            "title": "Marker"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "section": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Section"
+          },
+          "supporting_span": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Supporting Span"
+          },
+          "evidence_snapshot": {
+            "type": "string",
+            "title": "Evidence Snapshot"
+          },
+          "support_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Support Score"
+          },
+          "source_updated_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "marker",
+          "title",
+          "url",
+          "section",
+          "supporting_span",
+          "evidence_snapshot",
+          "support_score",
+          "source_updated_at"
+        ],
+        "title": "CitationOut"
+      },
+      "ConversationDetail": {
+        "properties": {
+          "conversation": {
+            "$ref": "#/components/schemas/ConversationRow"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/MessageOut"
+            },
+            "type": "array",
+            "title": "Messages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "conversation",
+          "messages"
+        ],
+        "title": "ConversationDetail"
+      },
+      "ConversationRow": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "message_count": {
+            "type": "integer",
+            "title": "Message Count"
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Started At"
+          },
+          "last_message_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Message At"
+          },
+          "first_question": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Question"
+          },
+          "lowest_confidence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lowest Confidence"
+          },
+          "handoff": {
+            "type": "boolean",
+            "title": "Handoff"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "channel",
+          "status",
+          "language",
+          "message_count",
+          "started_at",
+          "last_message_at",
+          "first_question",
+          "lowest_confidence",
+          "handoff"
+        ],
+        "title": "ConversationRow"
+      },
+      "DocumentOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Url"
+          },
+          "source_type": {
+            "type": "string",
+            "title": "Source Type"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "last_error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Error"
+          },
+          "version_no": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version No"
+          },
+          "version_indexed_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version Indexed At"
+          },
+          "source_last_modified": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source Last Modified"
+          },
+          "chunk_count": {
+            "type": "integer",
+            "title": "Chunk Count"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "url",
+          "source_type",
+          "status",
+          "enabled",
+          "tags",
+          "last_error",
+          "version_no",
+          "version_indexed_at",
+          "source_last_modified",
+          "chunk_count",
+          "updated_at"
+        ],
+        "title": "DocumentOut"
+      },
+      "DocumentPatch": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "enabled"
+        ],
+        "title": "DocumentPatch"
+      },
+      "EmailChannel": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+          },
+          "to": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "To"
+          }
+        },
+        "type": "object",
+        "title": "EmailChannel"
+      },
+      "FeedbackRequest": {
+        "properties": {
+          "message_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Message Id"
+          },
+          "visitor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Visitor Id"
+          },
+          "rating": {
+            "type": "string",
+            "enum": [
+              "helpful",
+              "not_helpful"
+            ],
+            "title": "Rating"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message_id",
+          "visitor_id",
+          "rating"
+        ],
+        "title": "FeedbackRequest"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HandoffChannels": {
+        "properties": {
+          "email": {
+            "$ref": "#/components/schemas/EmailChannel",
+            "default": {
+              "enabled": false
+            }
+          },
+          "whatsapp": {
+            "$ref": "#/components/schemas/WhatsAppChannel",
+            "default": {
+              "enabled": false
+            }
+          },
+          "booking": {
+            "$ref": "#/components/schemas/BookingChannel",
+            "default": {
+              "enabled": false
+            }
+          }
+        },
+        "type": "object",
+        "title": "HandoffChannels"
+      },
+      "JobOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "progress": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Progress"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "finished_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Finished At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "status",
+          "progress",
+          "error_message",
+          "created_at",
+          "finished_at"
+        ],
+        "title": "JobOut"
+      },
+      "LeadIn": {
+        "properties": {
+          "channel": {
+            "type": "string",
+            "enum": [
+              "email",
+              "whatsapp",
+              "booking"
+            ],
+            "title": "Channel"
+          },
+          "visitor_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Visitor Id"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "idempotency_key": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 8,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Idempotency Key"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "email"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 40,
+                "pattern": "^[0-9+()\\- ]{6,40}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "consent": {
+            "type": "boolean",
+            "title": "Consent",
+            "default": false
+          },
+          "captcha_token": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4096
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Captcha Token"
+          }
+        },
+        "type": "object",
+        "required": [
+          "channel",
+          "visitor_id",
+          "idempotency_key"
+        ],
+        "title": "LeadIn"
+      },
+      "LeadOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "channel": {
+            "type": "string",
+            "title": "Channel"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "conversation_id",
+          "channel",
+          "name",
+          "email",
+          "phone",
+          "message",
+          "summary",
+          "source",
+          "status",
+          "created_at"
+        ],
+        "title": "LeadOut"
+      },
+      "LeadPatch": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "contacted",
+              "qualified",
+              "closed",
+              "spam"
+            ],
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "LeadPatch"
+      },
+      "LeadReceipt": {
+        "properties": {
+          "lead_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Lead Id"
+          },
+          "status": {
+            "type": "string",
+            "const": "received",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "lead_id",
+          "status"
+        ],
+        "title": "LeadReceipt"
+      },
+      "LoginIn": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "LoginIn"
+      },
+      "LoginOut": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "User Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Tenant Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "admin"
+            ],
+            "title": "Role"
+          },
+          "memberships": {
+            "items": {
+              "$ref": "#/components/schemas/MembershipOut"
+            },
+            "type": "array",
+            "title": "Memberships"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "simple",
+              "platform"
+            ],
+            "title": "Mode"
+          },
+          "token": {
+            "type": "string",
+            "title": "Token"
+          },
+          "expires_in_seconds": {
+            "type": "integer",
+            "title": "Expires In Seconds"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "email",
+          "tenant_id",
+          "role",
+          "memberships",
+          "mode",
+          "token",
+          "expires_in_seconds"
+        ],
+        "title": "LoginOut"
+      },
+      "MembershipOut": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Tenant Id"
+          },
+          "tenant_name": {
+            "type": "string",
+            "title": "Tenant Name"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "admin"
+            ],
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tenant_id",
+          "tenant_name",
+          "role"
+        ],
+        "title": "MembershipOut"
+      },
+      "MessageOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "content": {
+            "type": "string",
+            "title": "Content"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "answer_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer Status"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "handoff_required": {
+            "type": "boolean",
+            "title": "Handoff Required"
+          },
+          "rewritten_query": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rewritten Query"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/CitationOut"
+            },
+            "type": "array",
+            "title": "Citations"
+          },
+          "feedback": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Feedback"
+          },
+          "retrieval_trace": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Retrieval Trace"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "role",
+          "content",
+          "created_at",
+          "answer_status",
+          "confidence",
+          "handoff_required",
+          "rewritten_query",
+          "language",
+          "citations",
+          "feedback",
+          "retrieval_trace"
+        ],
+        "title": "MessageOut"
+      },
+      "Overview": {
+        "properties": {
+          "period_days": {
+            "type": "integer",
+            "title": "Period Days"
+          },
+          "conversations": {
+            "type": "integer",
+            "title": "Conversations"
+          },
+          "questions": {
+            "type": "integer",
+            "title": "Questions"
+          },
+          "answered": {
+            "type": "integer",
+            "title": "Answered"
+          },
+          "handoffs": {
+            "type": "integer",
+            "title": "Handoffs"
+          },
+          "citation_coverage": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Citation Coverage"
+          },
+          "helpful_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Helpful Rate"
+          },
+          "feedback_count": {
+            "type": "integer",
+            "title": "Feedback Count"
+          },
+          "indexed_documents": {
+            "type": "integer",
+            "title": "Indexed Documents"
+          },
+          "failed_jobs": {
+            "type": "integer",
+            "title": "Failed Jobs"
+          },
+          "recent": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Recent"
+          }
+        },
+        "type": "object",
+        "required": [
+          "period_days",
+          "conversations",
+          "questions",
+          "answered",
+          "handoffs",
+          "citation_coverage",
+          "helpful_rate",
+          "feedback_count",
+          "indexed_documents",
+          "failed_jobs",
+          "recent"
+        ],
+        "title": "Overview"
+      },
+      "PlaygroundIn": {
+        "properties": {
+          "message": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Message"
+          },
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "message"
+        ],
+        "title": "PlaygroundIn"
+      },
+      "PlaygroundOut": {
+        "properties": {
+          "conversation_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Conversation Id"
+          },
+          "message_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "uuid"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message Id"
+          },
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          },
+          "confidence": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence"
+          },
+          "handoff_required": {
+            "type": "boolean",
+            "title": "Handoff Required"
+          },
+          "events": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Events"
+          },
+          "trace": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trace"
+          },
+          "citations": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "array",
+            "title": "Citations"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": [
+          "conversation_id",
+          "message_id",
+          "answer",
+          "status",
+          "confidence",
+          "handoff_required",
+          "events",
+          "trace",
+          "citations",
+          "error"
+        ],
+        "title": "PlaygroundOut"
+      },
+      "SessionOut": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "User Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Tenant Id"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "owner",
+              "admin"
+            ],
+            "title": "Role"
+          },
+          "memberships": {
+            "items": {
+              "$ref": "#/components/schemas/MembershipOut"
+            },
+            "type": "array",
+            "title": "Memberships"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "simple",
+              "platform"
+            ],
+            "title": "Mode"
+          }
+        },
+        "type": "object",
+        "required": [
+          "user_id",
+          "email",
+          "tenant_id",
+          "role",
+          "memberships",
+          "mode"
+        ],
+        "title": "SessionOut"
+      },
+      "SettingsOut": {
+        "properties": {
+          "organization_name": {
+            "type": "string",
+            "title": "Organization Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "industry": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "audience": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Audience"
+          },
+          "website_urls": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Website Urls"
+          },
+          "allowed_domains": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allowed Domains"
+          },
+          "allowed_origins": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Allowed Origins"
+          },
+          "founder_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founder Name"
+          },
+          "founder_role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founder Role"
+          },
+          "default_language": {
+            "type": "string",
+            "title": "Default Language"
+          },
+          "enabled_languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Enabled Languages"
+          },
+          "timezone": {
+            "type": "string",
+            "title": "Timezone"
+          },
+          "llm_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Provider"
+          },
+          "llm_model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Model"
+          },
+          "reranker_provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reranker Provider"
+          },
+          "confidence_threshold": {
+            "type": "number",
+            "title": "Confidence Threshold"
+          },
+          "max_answer_tokens": {
+            "type": "integer",
+            "title": "Max Answer Tokens"
+          },
+          "monthly_budget_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Budget Usd"
+          },
+          "budget_warning_pct": {
+            "type": "integer",
+            "title": "Budget Warning Pct"
+          },
+          "budget_hard_limit": {
+            "type": "boolean",
+            "title": "Budget Hard Limit"
+          },
+          "greeting": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Greeting"
+          },
+          "widget_theme": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Widget Theme"
+          },
+          "handoff_channels": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Handoff Channels"
+          },
+          "setup_completed": {
+            "type": "boolean",
+            "title": "Setup Completed"
+          },
+          "public_key": {
+            "type": "string",
+            "title": "Public Key"
+          },
+          "embedding_index": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Embedding Index"
+          },
+          "spend_this_month_usd": {
+            "type": "number",
+            "title": "Spend This Month Usd"
+          },
+          "budget_warning": {
+            "type": "boolean",
+            "title": "Budget Warning"
+          }
+        },
+        "type": "object",
+        "required": [
+          "organization_name",
+          "description",
+          "industry",
+          "audience",
+          "website_urls",
+          "allowed_domains",
+          "allowed_origins",
+          "founder_name",
+          "founder_role",
+          "default_language",
+          "enabled_languages",
+          "timezone",
+          "llm_provider",
+          "llm_model",
+          "reranker_provider",
+          "confidence_threshold",
+          "max_answer_tokens",
+          "monthly_budget_usd",
+          "budget_warning_pct",
+          "budget_hard_limit",
+          "greeting",
+          "widget_theme",
+          "handoff_channels",
+          "setup_completed",
+          "public_key",
+          "embedding_index",
+          "spend_this_month_usd",
+          "budget_warning"
+        ],
+        "title": "SettingsOut"
+      },
+      "SettingsPatch": {
+        "properties": {
+          "organization_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organization Name"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "industry": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "audience": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Audience"
+          },
+          "website_urls": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 20
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Website Urls"
+          },
+          "allowed_domains": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 20
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Domains"
+          },
+          "allowed_origins": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 20
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Allowed Origins"
+          },
+          "founder_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founder Name"
+          },
+          "founder_role": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Founder Role"
+          },
+          "default_language": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "ur",
+                  "ur-Latn"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Language"
+          },
+          "enabled_languages": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "ur",
+                    "ur-Latn"
+                  ]
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enabled Languages"
+          },
+          "timezone": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 64
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Timezone"
+          },
+          "llm_provider": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ollama",
+                  "openai",
+                  "anthropic",
+                  "openai_compat"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Provider"
+          },
+          "llm_model": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 100
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Llm Model"
+          },
+          "reranker_provider": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "local",
+                  "cohere",
+                  "none"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reranker Provider"
+          },
+          "confidence_threshold": {
+            "anyOf": [
+              {
+                "type": "number",
+                "maximum": 0.95,
+                "minimum": 0.05
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Confidence Threshold"
+          },
+          "max_answer_tokens": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 4000.0,
+                "minimum": 50.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Answer Tokens"
+          },
+          "monthly_budget_usd": {
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": 0.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Budget Usd"
+          },
+          "budget_warning_pct": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 100.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Warning Pct"
+          },
+          "budget_hard_limit": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget Hard Limit"
+          },
+          "greeting": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 300
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Greeting"
+          },
+          "widget_theme": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/WidgetTheme"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "handoff_channels": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/HandoffChannels"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "mark_setup_complete": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Mark Setup Complete"
+          }
+        },
+        "type": "object",
+        "title": "SettingsPatch"
+      },
+      "SetupIn": {
+        "properties": {
+          "setup_token": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 1,
+            "title": "Setup Token"
+          },
+          "organization_name": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Organization Name"
+          },
+          "website_url": {
+            "type": "string",
+            "maxLength": 2048,
+            "minLength": 4,
+            "title": "Website Url"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 256,
+            "minLength": 12,
+            "title": "Password"
+          },
+          "display_name": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 200
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Display Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "setup_token",
+          "organization_name",
+          "website_url",
+          "email",
+          "password"
+        ],
+        "title": "SetupIn"
+      },
+      "SetupStatus": {
+        "properties": {
+          "needs_setup": {
+            "type": "boolean",
+            "title": "Needs Setup"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "simple",
+              "platform"
+            ],
+            "title": "Mode"
+          }
+        },
+        "type": "object",
+        "required": [
+          "needs_setup",
+          "mode"
+        ],
+        "title": "SetupStatus"
+      },
+      "SourceDetail": {
+        "properties": {
+          "source": {
+            "$ref": "#/components/schemas/SourceOut"
+          },
+          "documents": {
+            "items": {
+              "$ref": "#/components/schemas/DocumentOut"
+            },
+            "type": "array",
+            "title": "Documents"
+          },
+          "jobs": {
+            "items": {
+              "$ref": "#/components/schemas/JobOut"
+            },
+            "type": "array",
+            "title": "Jobs"
+          }
+        },
+        "type": "object",
+        "required": [
+          "source",
+          "documents",
+          "jobs"
+        ],
+        "title": "SourceDetail"
+      },
+      "SourceIn": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "website",
+              "sitemap"
+            ],
+            "title": "Kind"
+          },
+          "url": {
+            "type": "string",
+            "maxLength": 2048,
+            "minLength": 4,
+            "title": "Url"
+          },
+          "max_pages": {
+            "type": "integer",
+            "maximum": 2000.0,
+            "minimum": 1.0,
+            "title": "Max Pages",
+            "default": 200
+          },
+          "include_patterns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Include Patterns"
+          },
+          "exclude_patterns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Exclude Patterns"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 4,
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "url"
+        ],
+        "title": "SourceIn"
+      },
+      "SourceOut": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Id"
+          },
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "root_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Root Url"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tags"
+          },
+          "max_pages": {
+            "type": "integer",
+            "title": "Max Pages"
+          },
+          "last_crawled_at": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Crawled At"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "document_count": {
+            "type": "integer",
+            "title": "Document Count"
+          },
+          "indexed_count": {
+            "type": "integer",
+            "title": "Indexed Count"
+          },
+          "failed_count": {
+            "type": "integer",
+            "title": "Failed Count"
+          },
+          "latest_job": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JobOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "kind",
+          "root_url",
+          "enabled",
+          "tags",
+          "max_pages",
+          "last_crawled_at",
+          "created_at",
+          "document_count",
+          "indexed_count",
+          "failed_count",
+          "latest_job"
+        ],
+        "title": "SourceOut"
+      },
+      "SourcePatch": {
+        "properties": {
+          "enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Enabled"
+          },
+          "tags": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array",
+                "maxItems": 4
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "title": "SourcePatch"
+      },
+      "SwitchIn": {
+        "properties": {
+          "tenant_id": {
+            "type": "string",
+            "format": "uuid",
+            "title": "Tenant Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tenant_id"
+        ],
+        "title": "SwitchIn"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WhatsAppChannel": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": false
+          },
+          "number": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^\\+?[1-9]\\d{6,14}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Number"
+          }
+        },
+        "type": "object",
+        "title": "WhatsAppChannel"
+      },
+      "WidgetConfig": {
+        "properties": {
+          "organization": {
+            "type": "string",
+            "title": "Organization"
+          },
+          "greeting": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Greeting"
+          },
+          "default_language": {
+            "type": "string",
+            "title": "Default Language"
+          },
+          "enabled_languages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Enabled Languages"
+          },
+          "direction": {
+            "type": "string",
+            "enum": [
+              "ltr",
+              "rtl"
+            ],
+            "title": "Direction"
+          },
+          "theme": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Theme"
+          },
+          "handoff": {
+            "additionalProperties": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Handoff"
+          },
+          "ready": {
+            "type": "boolean",
+            "title": "Ready"
+          },
+          "captcha": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CaptchaConfig"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "organization",
+          "greeting",
+          "default_language",
+          "enabled_languages",
+          "direction",
+          "theme",
+          "handoff",
+          "ready"
+        ],
+        "title": "WidgetConfig"
+      },
+      "WidgetTheme": {
+        "properties": {
+          "primary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Primary"
+          },
+          "accent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Accent"
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "auto",
+              "light",
+              "dark"
+            ],
+            "title": "Mode",
+            "default": "auto"
+          },
+          "position": {
+            "type": "string",
+            "enum": [
+              "right",
+              "left"
+            ],
+            "title": "Position",
+            "default": "right"
+          },
+          "launcher_text": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 40
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Launcher Text"
+          }
+        },
+        "type": "object",
+        "title": "WidgetTheme"
+      }
+    }
+  }
+}

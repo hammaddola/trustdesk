@@ -1,0 +1,19 @@
+{
+  "name": "@trustdesk/contracts",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "description": "TypeScript types generated from the TrustDesk OpenAPI spec (do not edit generated files).",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "generate": "openapi-typescript openapi.json -o src/api.gen.ts",
+    "check": "openapi-typescript openapi.json -o src/api.gen.ts && git diff --exit-code src/api.gen.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "@trustdesk/tsconfig": "workspace:*",
+    "openapi-typescript": "^7.4.0",
+    "typescript": "^5.6.3"
+  }
+}

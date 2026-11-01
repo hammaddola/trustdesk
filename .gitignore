@@ -1,0 +1,24 @@
+node_modules/
+dist/
+.next/
+.turbo/
+coverage/
+.env
+.env.*
+!.env.example
+*.log
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+data/
+playwright-report/
+test-results/
+
+# generated: widget bundle copied into the web app at build time
+apps/admin/public/trustdesk.js
+*.tsbuildinfo
+next-env.d.ts

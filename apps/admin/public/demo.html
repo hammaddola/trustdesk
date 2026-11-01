@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acme Studio — TrustDesk widget demo (DEMO DATA)</title>
+    <style>
+      /* Deliberately hostile host-page CSS: the widget lives in Shadow DOM and must be unaffected. */
+      body { margin: 0; font-family: Georgia, serif; background: #f4f1ea; color: #2b2b2b; }
+      main { max-width: 760px; margin: 0 auto; padding: 48px 20px; line-height: 1.6; }
+      * { letter-spacing: 0.02em; }
+      button { background: yellow; border: 4px dashed green; }
+      .note { background: #fff; border: 1px solid #ddd; padding: 12px 16px; border-radius: 8px; font-family: system-ui, sans-serif; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Acme Studio</h1>
+      <p><strong>Fictional demo company.</strong> This page shows how the TrustDesk widget looks on a customer's website.</p>
+      <p class="note">Click <em>Ask us anything</em> (bottom right). Try: “How much does the Starter website cost?”,
+        “What are your office hours?”, or something unrelated like “Do you offer SEO audits?” to see the honest handoff.</p>
+      <button type="button">A host-page button (styles must not leak into the widget)</button>
+    </main>
+    <!-- One-tag install. data-api defaults to this script's origin. -->
+    <script src="/trustdesk.js" data-tenant="td_pk_demo_7icFFHAdV9ncZKH5" data-theme="dark" defer></script>
+  </body>
+</html>
