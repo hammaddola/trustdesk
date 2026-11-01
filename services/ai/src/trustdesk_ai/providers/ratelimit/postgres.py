@@ -36,3 +36,16 @@ class PostgresRateLimitStore:
             if count == 1 and now % 97 == 0:  # occasional cleanup, no scheduler needed
                 await db.execute(text("DELETE FROM rate_limit_buckets WHERE window_start < now() - interval '1 day'"))
         return int(count) <= limit
+
+    async def count(self, key: str, window_seconds: int) -> int:
+        """Current hits in this window, without adding one."""
+        now = int(time.time())
+        window = datetime.fromtimestamp(now - now % window_seconds, UTC)
+        async with global_session() as db:
+            value = (
+                await db.execute(
+                    text("SELECT count FROM rate_limit_buckets WHERE bucket_key = :k AND window_start = :w"),
+                    {"k": key, "w": window},
+                )
+            ).scalar_one_or_none()
+        return int(value or 0)

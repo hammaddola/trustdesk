@@ -25,6 +25,7 @@ from trustdesk_ai.providers.ratelimit.postgres import PostgresRateLimitStore, bu
 
 router = APIRouter(prefix="/v1/admin", tags=["admin-auth"])
 _limiter = PostgresRateLimitStore()
+LOGIN_WINDOW = 900  # seconds
 
 
 class MembershipOut(BaseModel):
@@ -68,11 +69,12 @@ class LoginIn(BaseModel):
 @router.post("/auth/login", response_model=LoginOut)
 async def login(body: LoginIn, request: Request) -> LoginOut:
     ip = client_ip(request)
-    # Throttle per account and per IP (brute force / credential stuffing).
-    if not await _limiter.hit(bucket_key("login-email", body.email.lower()), 10, 900) or not await _limiter.hit(
-        bucket_key("login-ip", ip), 30, 900
-    ):
-        raise HTTPException(429, "too many sign-in attempts, try again in 15 minutes")
+    # Only FAILED attempts count, keyed on (email, IP) and on IP. Someone guessing from elsewhere therefore
+    # cannot lock the real owner out; a single source is still stopped after a few failures.
+    pair_key = bucket_key("login-fail", body.email.lower(), ip)
+    ip_key = bucket_key("login-fail-ip", ip)
+    if await _limiter.count(pair_key, LOGIN_WINDOW) >= 10 or await _limiter.count(ip_key, LOGIN_WINDOW) >= 30:
+        raise HTTPException(429, "too many failed sign-in attempts, try again in 15 minutes")
     settings = get_settings()
     try:
         async with global_session() as db:
@@ -85,6 +87,8 @@ async def login(body: LoginIn, request: Request) -> LoginOut:
                 user_agent=request.headers.get("user-agent"),
             )
     except auth.AuthError as exc:
+        await _limiter.hit(pair_key, 10, LOGIN_WINDOW)
+        await _limiter.hit(ip_key, 30, LOGIN_WINDOW)
         raise HTTPException(401, "invalid email or password") from exc
     await audit(principal.tenant_id, principal.user_id, "auth.login", request=request)
     return LoginOut(

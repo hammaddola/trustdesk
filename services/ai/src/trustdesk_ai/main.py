@@ -15,6 +15,7 @@ from sqlalchemy import text
 from trustdesk_ai.api import admin_auth, admin_data, admin_playground, admin_settings, admin_sources, handoff, public
 from trustdesk_ai.config.settings import get_settings
 from trustdesk_ai.db.session import global_session
+from trustdesk_ai.observability.body_limit import BodySizeLimitMiddleware
 from trustdesk_ai.observability.middleware import RequestContextMiddleware, request_id_var
 
 log = logging.getLogger("trustdesk")
@@ -51,6 +52,11 @@ def create_app() -> FastAPI:
         openapi_url=None if settings.is_production else "/openapi.json",
     )
     app.add_middleware(RequestContextMiddleware)
+    # Added last = outermost: counts real body bytes, so chunked uploads can't bypass the Content-Length check.
+    app.add_middleware(
+        BodySizeLimitMiddleware,
+        limit_for=lambda path: settings.max_upload_bytes if path.endswith("/upload") else settings.max_request_bytes,
+    )
     for r in (
         public.router,
         handoff.router,

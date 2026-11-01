@@ -123,3 +123,44 @@ def test_validation_errors_do_not_echo_input(client):
     )
     assert r.status_code == 422
     assert secret not in r.text and "alert" not in r.text
+
+
+def test_chunked_body_over_limit_rejected_without_content_length(client):
+    def chunks():
+        for _ in range(20):
+            yield b"x" * 8192  # 160 KB total, sent chunked (no Content-Length header)
+
+    r = client.post(
+        f"/v1/public/{KEY}/chat/stream",
+        content=chunks(),
+        headers={"Origin": "https://www.acme.example", "Content-Type": "application/json"},
+    )
+    assert r.status_code == 413
+
+
+def test_failed_logins_throttle_per_email_and_ip_without_locking_out_others(client, monkeypatch):
+    from trustdesk_ai.api import admin_auth
+    from trustdesk_ai.auth import service as auth
+
+    counts: dict[str, int] = {}
+
+    class FakeLimiter:
+        async def count(self, key, window):
+            return counts.get(key, 0)
+
+        async def hit(self, key, limit, window):
+            counts[key] = counts.get(key, 0) + 1
+            return counts[key] <= limit
+
+    async def always_wrong(*args, **kwargs):
+        raise auth.AuthError("invalid")
+
+    monkeypatch.setattr(admin_auth, "_limiter", FakeLimiter())
+    monkeypatch.setattr(auth, "login", always_wrong)
+    body = {"email": "owner@example.com", "password": "wrong-password"}
+    attacker = {"X-Forwarded-For": "203.0.113.9"}
+    codes = [client.post("/v1/admin/auth/login", json=body, headers=attacker).status_code for _ in range(11)]
+    assert codes[:10] == [401] * 10 and codes[10] == 429  # attacker's source is throttled
+    # Same email from a different client address is NOT locked out (keys are per email+IP, failures only).
+    monkeypatch.setattr(admin_auth, "client_ip", lambda request: "198.51.100.7")
+    assert client.post("/v1/admin/auth/login", json=body).status_code == 401

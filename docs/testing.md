@@ -4,7 +4,7 @@ Results below were produced on 2026-11-01 (Windows 11, Python 3.11.9, Node 24). 
 
 | Suite | Command | Result |
 |---|---|---|
-| Python unit + security (no DB) | `cd services/ai && .venv/Scripts/python -m pytest` | 113 passed, 1 skipped (integration) |
+| Python unit + security (no DB) | `cd services/ai && .venv/Scripts/python -m pytest` | 117 passed, 1 skipped (integration) |
 | Python integration (real Postgres + pgvector) | `TRUSTDESK_INTEGRATION=1 .venv/Scripts/python -m pytest tests/integration` | 7 passed |
 | Python lint / types | `ruff check src tests` · `mypy src` (strict) | clean |
 | Widget (Vitest + React Testing Library) | `pnpm --filter @trustdesk/widget test` | 9 passed |
