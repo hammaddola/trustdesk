@@ -87,22 +87,19 @@ class LoginIn(BaseModel):
 async def login(body: LoginIn, request: Request) -> LoginOut:
     ip = client_ip(request)
     email = body.email.lower()
-    # Each attempt atomically reserves a slot BEFORE the password is checked (no check-then-act race); a
-    # successful login refunds it, so only failures accumulate.
-    #  - (email, client network): hard limit 10 / 15 min - stops a single source guessing one account.
-    #  - client network: hard limit 30 / 15 min - stops one source spraying many accounts.
-    #  - email alone: no hard lockout (that would let anyone lock the owner out); after 20 failures from
-    #    anywhere, every attempt is slowed down progressively, which blunts distributed guessing.
-    keys = {
-        "pair": (bucket_key("login-fail", email, ip_network_key(ip)), 10),
-        "ip": (bucket_key("login-fail-ip", ip_network_key(ip)), 30),
-    }
+    # Throttling (all checks happen BEFORE the password is verified, atomically per key):
+    #  - client network (IPv6 /64): every attempt counts, 30 / 15 min, never refunded - so a valid account
+    #    cannot be used to "earn back" attempts for spraying other accounts.
+    #  - (email, client network): 10 / 15 min; refunded on success (same window only), so only failures count.
+    #  - email alone: no hard lockout (others could lock the owner out); after 20 failures from anywhere,
+    #    every attempt is slowed down progressively.
+    network = ip_network_key(ip)
+    ok_ip = await _limiter.hit(bucket_key("login-ip", network), 30, LOGIN_WINDOW)
+    pair_key = bucket_key("login-fail", email, network)
+    ok_pair, pair_window = await _limiter.reserve(pair_key, 10, LOGIN_WINDOW)
+    if not (ok_ip and ok_pair):
+        raise HTTPException(429, "too many sign-in attempts, try again in 15 minutes")
     account_key = bucket_key("login-fail-account", email)
-    reserved: list[str] = []
-    for key, limit in keys.values():
-        reserved.append(key)
-        if not await _limiter.hit(key, limit, LOGIN_WINDOW):
-            raise HTTPException(429, "too many failed sign-in attempts, try again in 15 minutes")
     account_failures = await _limiter.count(account_key, LOGIN_WINDOW)
     if account_failures >= 20:
         await asyncio.sleep(min(0.25 * (account_failures - 19), 5.0))
@@ -120,8 +117,7 @@ async def login(body: LoginIn, request: Request) -> LoginOut:
     except auth.AuthError as exc:
         await _limiter.hit(account_key, 1_000_000, LOGIN_WINDOW)  # counter only; never blocks on its own
         raise HTTPException(401, "invalid email or password") from exc
-    for key in reserved:
-        await _limiter.refund(key, LOGIN_WINDOW)
+    await _limiter.refund(pair_key, pair_window)
     await audit(principal.tenant_id, principal.user_id, "auth.login", request=request)
     return LoginOut(
         **_session_out(principal).model_dump(), token=token, expires_in_seconds=settings.session_ttl_hours * 3600

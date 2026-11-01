@@ -69,7 +69,7 @@ def run(port: int, rebuild: bool) -> None:
 
     exe = [sys.executable, "-m", "trustdesk_ai.cli.main"]
     procs: list[tuple[str, subprocess.Popen[bytes]]] = []
-    flags = subprocess.CREATE_NEW_PROCESS_GROUP if sys.platform == "win32" else 0
+    flags = getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)  # Windows-only constant
     try:
         procs.append(
             (

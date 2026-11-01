@@ -152,7 +152,10 @@ def test_failed_logins_throttle_per_email_and_ip_without_locking_out_others(clie
             counts[key] = counts.get(key, 0) + 1
             return counts[key] <= limit
 
-        async def refund(self, key, window):
+        async def reserve(self, key, limit, window):
+            return await self.hit(key, limit, window), "w"
+
+        async def refund(self, key, window_start):
             counts[key] = max(counts.get(key, 0) - 1, 0)
 
     async def always_wrong(*args, **kwargs):
